@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # Required for branch creation
+  contents: write
 
 jobs:
   generate:
@@ -18,27 +18,13 @@ jobs:
         id: snake
         with:
           github_user_name: M-Rehan0
-          outputs: .snk/  # Stores SVG in this folder
+          outputs: dist/  # Changed from .snk/ to dist/
 
-      - name: Create output branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            try {
-              await github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: 'refs/heads/output',
-                sha: context.sha
-              })
-            } catch (error) {
-              // Branch exists - this is fine
-            }
-
-      - name: Deploy to output branch
+      - name: Deploy to Output Branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .snk
+          publish_dir: dist
           publish_branch: output
-          force_orphan: true  # Keeps only the SVG file
+          force_orphan: true
+          keep_files: false  # Ensures clean deployment
