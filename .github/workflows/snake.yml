@@ -5,17 +5,40 @@ on:
     - cron: "0 0 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write  # Required for branch creation
+
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        
       - uses: Platane/snk@v3
+        id: snake
         with:
           github_user_name: M-Rehan0
-      - uses: crazy-max/ghaction-github-pages@v3
+          outputs: .snk/  # Stores SVG in this folder
+
+      - name: Create output branch
+        uses: actions/github-script@v6
         with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/heads/output',
+                sha: context.sha
+              })
+            } catch (error) {
+              // Branch exists - this is fine
+            }
+
+      - name: Deploy to output branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .snk
+          publish_branch: output
+          force_orphan: true  # Keeps only the SVG file
