@@ -34,7 +34,3 @@
   </a>
 </p>
 
-<!-- Snake Animation--->
-## 🐍 My Contribution 
-
-![Snake Animation](https://raw.githubusercontent.com/M-Rehan0/M-Rehan0/output/github-contribution-grid-snake.svg)
