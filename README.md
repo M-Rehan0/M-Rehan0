@@ -32,5 +32,8 @@
   <a href="mailto:muhammad.rchaudhary@outlook.com">
     <img src="https://img.shields.io/badge/Outlook-0078D4?style=for-the-badge&logo=microsoft-outlook&logoColor=white" />
   </a>
+  <a href="https://mrcweb.netlify.app/">
+    <img src="https://img.shields.io/badge/Portfolio-0078D4?style=for-the-badge&logo=windowsterminal&logoColor=white" />
+  </a>
 </p>
 
